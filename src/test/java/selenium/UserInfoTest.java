@@ -20,6 +20,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Generator;
 import utils.ScreenShot;
+import utils.Web;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,17 +39,7 @@ public class UserInfoTest {
     @Before
     public void setUp() {
 
-        //Find the chrome driver
-        System.setProperty("webdriver.chrome.driver", "/Users/diego/drivers/chromedriver");
-
-        //Open the Chrome
-        chrome = new ChromeDriver();
-
-        //Set timeout
-        chrome.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-        //Go to url = "http://www.juliodelima.com.br/taskit/"
-        chrome.get("http://www.juliodelima.com.br/taskit/");
+        chrome = Web.createChrome();
 
         //Find element link by text. "Sign in" and click
         chrome.findElement(By.linkText("Sign in")).click();
@@ -97,7 +88,7 @@ public class UserInfoTest {
         assertEquals(toastSuccessMessage, expectedMessage);
     }
 
-//    @Test
+    @Test
     public void removeAdditionalDataAboutUser() {
 
         //Click on element with xpath = "//span[text()="+5551986823799"]/following-sibling::a"
