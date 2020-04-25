@@ -3,7 +3,9 @@ package selenium;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +14,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Generator;
+import utils.ScreenShot;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +25,9 @@ import static org.junit.Assert.assertEquals;
 public class SignTest {
 
     private WebDriver chrome;
+
+    @Rule
+    public TestName testName = new TestName();
 
     @Before
     public void setUp() {
@@ -86,7 +93,7 @@ public class SignTest {
     public void removeAdditionalDataAboutUser() {
 
         //Click on element with xpath = "//span[text()="+5551986823799"]/following-sibling::a"
-        chrome.findElement(By.xpath("//span[text()=\"+5551986823799\"]/following-sibling::a")).click();
+        chrome.findElement(By.xpath("//span[text()=\"+55911112222\"]/following-sibling::a")).click();
 
         //Confirm the alert js with button = "OK"
         chrome.switchTo().alert().accept();
@@ -95,6 +102,9 @@ public class SignTest {
         WebElement toastMessage = chrome.findElement(By.id("toast-container"));
         String toastSuccessMessage = toastMessage.getText();
         assertEquals(toastSuccessMessage, "Rest in peace, dear phone!");
+
+        String screenshotName = testName.getMethodName() + ".png";
+        ScreenShot.take(chrome, "/Users/diego/GITHUB/selenium/src/test/java/screenshot/" + Generator.dateTimeToFileName() + screenshotName);
 
         //Await 10 seconds to message toast get out
         WebDriverWait await = new WebDriverWait(chrome, 10);
