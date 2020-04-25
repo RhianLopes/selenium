@@ -1,11 +1,15 @@
 package selenium;
 
+import org.easetech.easytest.annotation.DataLoader;
+import org.easetech.easytest.annotation.Param;
+import org.easetech.easytest.runner.DataDrivenTestRunner;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +26,9 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
-public class SignTest {
+@RunWith(DataDrivenTestRunner.class)
+@DataLoader(filePaths = "UserInfoTest.csv")
+public class UserInfoTest {
 
     private WebDriver chrome;
 
@@ -64,8 +70,10 @@ public class SignTest {
         chrome.findElement(By.linkText("MORE DATA ABOUT YOU")).click();
     }
 
-//    @Test
-    public void doSignInTaskItAndAddAdditionalInfoAboutUser() {
+    @Test
+    public void doSignInTaskItAndAddAdditionalInfoAboutUser(@Param(name = "type") String type,
+                                                            @Param(name = "contact") String contact,
+                                                            @Param(name = "message") String expectedMessage) {
 
         //Click on button with xpath //button[@data-target="addmoredata"]
         chrome.findElement(By.xpath("//button[@data-target=\"addmoredata\"]")).click();
@@ -75,10 +83,10 @@ public class SignTest {
 
         //In combo by name = "type", select the option "Phone"
         WebElement contacts = popupElement.findElement(By.name("type"));
-        new Select(contacts).selectByVisibleText("Phone");
+        new Select(contacts).selectByVisibleText(type);
 
         //In element with name = "contact", add "+55911112222"
-        popupElement.findElement(By.name("contact")).sendKeys("+55911112222");
+        popupElement.findElement(By.name("contact")).sendKeys(contact);
 
         //Click in link with name = "SAVE"
         popupElement.findElement(By.linkText("SAVE")).click();
@@ -86,10 +94,10 @@ public class SignTest {
         //In message toast with id "toast-container" valid message "Your contact has been added!"
         String toastSuccessMessage = chrome.findElement(By.id("toast-container")).getText();
 
-        assertEquals(toastSuccessMessage, "Your contact has been added!");
+        assertEquals(toastSuccessMessage, expectedMessage);
     }
 
-    @Test
+//    @Test
     public void removeAdditionalDataAboutUser() {
 
         //Click on element with xpath = "//span[text()="+5551986823799"]/following-sibling::a"
@@ -117,6 +125,6 @@ public class SignTest {
     @After
     public void tearDown() {
         //Quit the chrome
-//        chrome.quit();
+        chrome.quit();
     }
 }
