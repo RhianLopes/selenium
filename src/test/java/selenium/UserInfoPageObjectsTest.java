@@ -5,6 +5,7 @@ import org.easetech.easytest.annotation.Param;
 import org.easetech.easytest.runner.DataDrivenTestRunner;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +28,7 @@ public class UserInfoPageObjectsTest {
         chrome = Web.createChrome();
     }
 
-//    @Test
+    @Test
     public void doSignInTaskItAndAddAdditionalInfoAboutUser(@Param(name = "login") String login,
                                                             @Param(name = "password") String password,
                                                             @Param(name = "contactType") String contactType,

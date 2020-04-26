@@ -14,4 +14,10 @@ public class SecretPage extends BasePage {
 
         return new MePage(chrome);
     }
+
+    public MyTasksPage clickInMyTasks() {
+        chrome.findElement(By.linkText("My tasks")).click();
+
+        return new MyTasksPage(chrome);
+    }
 }
