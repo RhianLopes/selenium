@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.LoginPage;
 import utils.Web;
 
@@ -24,7 +27,7 @@ public class UserInfoPageObjectsTest {
         chrome = Web.createChrome();
     }
 
-    @Test
+//    @Test
     public void doSignInTaskItAndAddAdditionalInfoAboutUser(@Param(name = "login") String login,
                                                             @Param(name = "password") String password,
                                                             @Param(name = "contactType") String contactType,
@@ -40,6 +43,26 @@ public class UserInfoPageObjectsTest {
                 .captureMessageToast();
 
         assertEquals(expectedMessageToast, resultMessageToast);
+    }
+
+    @Test
+    public void removeAdditionalDataAboutUser(@Param(name = "login") String login,
+                                              @Param(name = "password") String password,
+                                              @Param(name = "contact") String contact) {
+
+        final WebElement resultToast = new LoginPage(chrome)
+                .clickSignIn()
+                .doLogin(login, password)
+                .clickInProfile()
+                .removeMoreDataAboutYou(contact)
+                .captureToast();
+
+        final String resultMessageToast = resultToast.getText();
+
+        WebDriverWait await = new WebDriverWait(chrome, 10);
+        await.until(ExpectedConditions.stalenessOf(resultToast));
+
+        assertEquals("Rest in peace, dear phone!", resultMessageToast);
     }
 
     @After

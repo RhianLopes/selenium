@@ -20,4 +20,30 @@ public class MePage extends BasePage {
 
         return new AddContactPage(chrome);
     }
+
+    public MePage acceptedRemoveContact() {
+        chrome.switchTo().alert().accept();
+
+        return this;
+    }
+
+    public MePage declinedRemoveContact() {
+        chrome.switchTo().alert().dismiss();
+
+        return this;
+    }
+
+    public MePage clickButtonRemoveMoreDataAboutYou(String contact) {
+        chrome.findElement(By.xpath("//span[text()=\"" + contact + "\"]/following-sibling::a")).click();
+
+        return this;
+    }
+
+    public MePage removeMoreDataAboutYou(String contact) {
+        clickOnMoreDataAboutYou();
+        clickButtonRemoveMoreDataAboutYou(contact);
+        acceptedRemoveContact();
+
+        return this;
+    }
 }

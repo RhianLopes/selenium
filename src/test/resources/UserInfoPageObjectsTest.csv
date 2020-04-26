@@ -1,3 +1,5 @@
 doSignInTaskItAndAddAdditionalInfoAboutUser,login,password,contactType,contact,expectedMessageToast
-                                           ,julio0001,123456,Phone,+55911112242,Your contact has been added!
-                                           ,julio0001,123456,E-mail,rhian.costa0003@gmail.com,Your contact has been added!
+                                           ,julio0001,123456,Phone,+55911115555,Your contact has been added!
+                                           ,julio0001,123456,E-mail,rhian.costa0004@gmail.com,Your contact has been added!
+removeAdditionalDataAboutUser,login,password,contact
+                             ,julio0001,123456,+55911115555
